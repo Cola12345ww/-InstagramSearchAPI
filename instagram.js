@@ -4,7 +4,9 @@
         var getSearch;
     
         $("#search").click(function () {
+           
             getSearch = $("#keyss").val();
+             $("#posts").empty();
             $.get(`https://www.instagram.com/explore/tags/${getSearch}/?__a=1`, function (data, status) {
                 var location = data.graphql.hashtag.name;
                 var profile_pic_url = data.graphql.hashtag.profile_pic_url;
@@ -13,7 +15,7 @@
                 console.log(data);
                 $("#location").text("# " + location);
                 $("#profile").attr("src", profile_pic_url);
-                $("#post").text(post_count + " posts");
+                $("#post").text(post_count );
     
                 var img_url = data.graphql.hashtag.edge_hashtag_to_media;
     
@@ -24,7 +26,7 @@
                     var like_count = post.node.edge_liked_by.count
                     var comment_count = post.node.edge_media_to_comment.count
                     var comment = post.node.edge_media_to_caption.edges[0].node.text;
-                    var show_img = `
+                    var show = `
                     <div class="col-4">
                     <img src="${display_url}" 
                     style = "height: 35vh;" class="img-thumbnail"><p></p>
@@ -35,7 +37,7 @@
                     ${comment}</div><br>
                     </div>`;
     
-                    $("#showimg").append(show_img);
+                    $("#posts").append(show);
                 }
     
             });
